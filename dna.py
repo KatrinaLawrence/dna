@@ -36,24 +36,16 @@ for row in database_list:
 #  Count highest number of repeats for each STR
 for key in DNA_STR:
     for i in range(sequence_len):
-        if sequence[i: i + len(key)] == key:
-            strcount = 1
-            j = i + len(key)
-            while j < sequence_len:
-                if sequence[j: j + len(key)] != key:
-                    if strcount > DNA_STR[key]:
-                        DNA_STR[key] = strcount
-                        break
-                    elif strcount <= DNA_STR[key]:
-                        break
-                else:
-                    strcount += 1
-                    j += len(key)
-                    continue
-            i = j
-            continue
-        else:
-            continue
+        #set the start end end markers
+        start = i
+        end = 0
+        while sequence[i: i + len(key)] == key:
+            i = i + len(key)
+            end = i
+        strcount = sequence.count(key, start, end)
+        #compare to value and see if higher
+        if strcount > DNA_STR[key]:
+            DNA_STR[key] = strcount
 
 
 #  Compare the DNA to the database and see if there is a match
